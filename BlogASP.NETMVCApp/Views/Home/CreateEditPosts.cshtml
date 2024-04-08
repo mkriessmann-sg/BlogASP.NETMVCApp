@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Create new/Edit Blog post Blog Post";
+}
+@model BlogASP.NETMVCApp.Models.BlogPost
+
+<div class="text-center">
+    <h1 class="display-4">Create a new Post</h1>
+    
+</div>
+
+<form asp-action="CreateEditPostForm" asp-asp-controller="Home">
+    <label class="mt-4">Title</label>
+    <input class="form-control" type="text" placeholder="Title" asp-for="Title"/>
+    <label class="mt-4">Content</label>
+    <input class="form-control" type="text" placeholder="content" asp-for="Content" />
+
+    <button class="btn btn-primary mt-4" type="submit">Ok</button>
+</form>
