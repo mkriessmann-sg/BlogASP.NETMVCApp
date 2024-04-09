@@ -20,7 +20,7 @@ namespace BlogASP.NETMVCApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("BlogPosts");
         }
 
         public IActionResult Privacy()
@@ -74,7 +74,7 @@ namespace BlogASP.NETMVCApp.Controllers
             _blogPostsDbContext.SaveChanges();
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("BlogPosts");
         }
         public IActionResult EditPostForm(BlogPost blogPost)
         {
@@ -86,7 +86,7 @@ namespace BlogASP.NETMVCApp.Controllers
                 _blogPostsDbContext.SaveChanges();
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("BlogPosts");
         }
 
 
