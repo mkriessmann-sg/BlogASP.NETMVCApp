@@ -4,5 +4,19 @@
 
 <div class="text-center">
 <h1 class="display-4">Blog Posts</h1>
-<p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<br />
+</div>
+<div>
+    @foreach (var post in Model)
+    {
+        <div>
+            <h2>@post.Title</h2>
+            <p>@post.Content</p>
+            <footer>
+                <p>Posted on: @post.PostDate.ToString("yyyy-MM-dd")</p>
+                <a asp-action="EditBlogPost" asp-route-id="@post.Id" >Edit</a>
+                <a asp-action="DeleteBlogPost" asp-route-id="@post.Id">Delete</a>
+            </footer>
+        </div>
+    }
 </div>

@@ -20,7 +20,7 @@ namespace BlogASP.NETMVCApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("BlogPosts");
         }
 
         public IActionResult Privacy()
@@ -34,10 +34,29 @@ namespace BlogASP.NETMVCApp.Controllers
         }
         public IActionResult CreateEditPosts()
         {
+
             return View();
         }
+        public IActionResult EditBlogPost(int id)
+        {
+            var postInDB = _blogPostsDbContext.BlogPosts.SingleOrDefault(BlogPost => BlogPost.Id == id);
+
+            return View(postInDB);
+        }
+        public IActionResult DeleteBlogPost(int id)
+        {
+            var postInDB = _blogPostsDbContext.BlogPosts.SingleOrDefault(BlogPost => BlogPost.Id == id);
+        _blogPostsDbContext.BlogPosts.Remove(postInDB);
+            _blogPostsDbContext.SaveChanges();
+            return RedirectToAction("BlogPosts");
+        }
+
         public IActionResult CreateEditPostForm(BlogPost blogPost)
         {
+            if (blogPost.Content != null || blogPost.Title != null)
+            {
+
+            
             // look for first free index and override the index with that data, add a date and thens save to the database
             int maxIdInUse = _blogPostsDbContext.BlogPosts.Any() ? _blogPostsDbContext.BlogPosts.Max(p => p.Id) : 0;
             bool _IdSet = false;
@@ -56,10 +75,28 @@ namespace BlogASP.NETMVCApp.Controllers
 
             _blogPostsDbContext.Add(blogPost);
             _blogPostsDbContext.SaveChanges();
+            }
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("BlogPosts");
         }
+        public IActionResult EditPostForm(BlogPost blogPost)
+        {
+            if (blogPost.Content == null || blogPost.Title == null)
+            {
+                var blogPostToUpdate = _blogPostsDbContext.BlogPosts.FirstOrDefault(p => p.Id == blogPost.Id);
+
+                blogPostToUpdate.Title = blogPost.Title;
+                blogPostToUpdate.Content = blogPost.Content;
+                _blogPostsDbContext.Update(blogPostToUpdate);
+                _blogPostsDbContext.SaveChanges();
+
+            }
+            return RedirectToAction("BlogPosts");
+            
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

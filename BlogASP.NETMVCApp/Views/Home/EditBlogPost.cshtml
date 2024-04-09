@@ -1,0 +1,15 @@
+﻿@model BlogASP.NETMVCApp.Models.BlogPost
+
+<div class="text-center">
+    <h1 class="display-4">Edit a blog post</h1>
+
+</div>
+
+<form asp-action="EditPostForm" asp-asp-controller="Home">
+    <label class="mt-4">Title</label>
+    <input class="form-control" type="text" placeholder="Title" asp-for="Title" value="@Model.Title" />
+    <label class="mt-4">Content</label>
+    <input class="form-control" type="text" placeholder="content" asp-for="Content" value="@Model.Content" />
+    <input hidden class="form-control" type="number" placeholder="0" asp-for="Id" value="@Model.Id" />
+    <button class="btn btn-primary mt-4" type="submit">Ok</button>
+</form>
