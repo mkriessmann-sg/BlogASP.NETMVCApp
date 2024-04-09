@@ -35,8 +35,23 @@ namespace BlogASP.NETMVCApp.Controllers
         }
         public IActionResult CreateEditPosts()
         {
+
             return View();
         }
+        public IActionResult EditBlogPost(int id)
+        {
+            var postInDB = _blogPostsDbContext.BlogPosts.SingleOrDefault(BlogPost => BlogPost.Id == id);
+
+            return View(postInDB);
+        }
+        public IActionResult DeleteBlogPost(int id)
+        {
+            var postInDB = _blogPostsDbContext.BlogPosts.SingleOrDefault(BlogPost => BlogPost.Id == id);
+        _blogPostsDbContext.BlogPosts.Remove(postInDB);
+            _blogPostsDbContext.SaveChanges();
+            return RedirectToAction("BlogPosts");
+        }
+
         public IActionResult CreateEditPostForm(BlogPost blogPost)
         {
             // look for first free index and override the index with that data, add a date and thens save to the database
@@ -61,6 +76,20 @@ namespace BlogASP.NETMVCApp.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult EditPostForm(BlogPost blogPost)
+        {
+            var blogPostToUpdate = _blogPostsDbContext.BlogPosts.FirstOrDefault(p => p.Id == blogPost.Id);
+            
+                blogPostToUpdate.Title = blogPost.Title;
+                blogPostToUpdate.Content = blogPost.Content;
+                _blogPostsDbContext.Update(blogPostToUpdate);
+                _blogPostsDbContext.SaveChanges();
+
+
+            return RedirectToAction("Index");
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
