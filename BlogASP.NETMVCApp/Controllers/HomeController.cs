@@ -30,8 +30,7 @@ namespace BlogASP.NETMVCApp.Controllers
 
         public IActionResult BlogPosts()
         {
-            var allBlogPosts = _blogPostsDbContext.BlogPosts.ToList();
-            return View(allBlogPosts);
+            return View();
         }
         public IActionResult CreateEditPosts()
         {
